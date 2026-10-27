@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2f5d50">
+  <meta name="description" content="A shared 10-day Clear Change meal-prep and wellness companion.">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Clear Change Companion</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">✿</div>
+    <div class="brand">
+      <p class="eyebrow">YOUR 10-DAY COMPANION</p>
+      <h1>Clear Change</h1>
+    </div>
+    <span id="syncBadge" class="sync-badge" title="Shared sync status">Local</span>
+  </header>
+
+  <main>
+    <section class="welcome card">
+      <p class="eyebrow">SMALL STEPS, TOGETHER</p>
+      <h2>Make each day easier.</h2>
+      <p>Plan meals, prepare freezer portions, and keep your shared checklist in one place.</p>
+      <div class="day-select-wrap">
+        <label for="daySelect">PROGRAM DAY</label>
+        <select id="daySelect" aria-label="Select program day"></select>
+      </div>
+      <div class="progress-row">
+        <div><strong id="dayProgress">0/8</strong><span> daily tasks</span></div>
+        <span id="progressPercent">0% complete</span>
+      </div>
+      <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
+    </section>
+
+    <nav class="tabs" aria-label="App sections">
+      <button class="tab active" data-tab="today">Today</button>
+      <button class="tab" data-tab="meals">Meals</button>
+      <button class="tab" data-tab="prep">Meal prep</button>
+      <button class="tab" data-tab="wellness">Wellness</button>
+    </nav>
+
+    <section id="todayPanel" class="panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">DAY BY DAY</p><h2>Today's checklist</h2></div>
+        <span class="pill" id="todayDayPill">Day 1</span>
+      </div>
+      <div id="taskList" class="check-list"></div>
+      <div class="card note-card">
+        <label for="dailyNote">Notes for today</label>
+        <textarea id="dailyNote" rows="3" placeholder="Energy, hunger, sleep, reminders…"></textarea>
+        <button id="saveNote" class="primary full">Save note</button>
+      </div>
+    </section>
+
+    <section id="mealsPanel" class="panel hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">PLAN YOUR PLATE</p><h2>Meal planner</h2></div>
+        <span class="pill">Day <span class="inline-day"></span></span>
+      </div>
+      <div class="notice"><strong>Food-safety reminder</strong><br>Use your official kit guide to confirm foods allowed on each day. This app does not label recipes as program-approved.</div>
+      <div class="card form-card">
+        <label for="mealOwner">Meals for</label>
+        <select id="mealOwner">
+          <option value="Both">Both of us</option>
+          <option value="Me">My meals</option>
+          <option value="Friend">Friend — dairy-free & gluten-free</option>
+        </select>
+        <label for="breakfast">Breakfast</label><textarea id="breakfast" rows="2" placeholder="Breakfast idea…"></textarea>
+        <label for="lunch">Lunch</label><textarea id="lunch" rows="2" placeholder="Lunch or leftovers…"></textarea>
+        <label for="dinner">Dinner</label><textarea id="dinner" rows="2" placeholder="Dinner idea…"></textarea>
+        <label for="snacks">Snacks</label><textarea id="snacks" rows="2" placeholder="Snacks permitted for this day…"></textarea>
+        <label class="inline-check"><input id="allergyChecked" type="checkbox"> I checked ingredients and cross-contact for dairy and gluten.</label>
+        <button id="saveMeals" class="primary full">Save meal plan</button>
+        <button id="copyMeals" class="secondary full">Copy meal plan</button>
+      </div>
+      <p id="mealStatus" class="status-text" role="status"></p>
+    </section>
+
+    <section id="prepPanel" class="panel hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">BATCH COOK & FREEZE</p><h2>Meal-prep checklist</h2></div>
+        <span class="pill">Reusable</span>
+      </div>
+      <p class="muted">Check these off during your prep session. The checklist is shared between both users.</p>
+      <div id="prepList" class="check-list"></div>
+      <div class="card form-card">
+        <label for="freezerNote">Freezer inventory / portions</label>
+        <textarea id="freezerNote" rows="3" placeholder="e.g., 2 fish portions — Day 5; soup portions…"></textarea>
+        <button id="saveFreezer" class="primary full">Save freezer notes</button>
+      </div>
+      <div class="notice"><strong>Safe storage:</strong> refrigerate perishable food within 2 hours, cool in shallow containers, label with the date, and thaw in the refrigerator.</div>
+    </section>
+
+    <section id="wellnessPanel" class="panel hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">GENTLE DAILY HABITS</p><h2>Wellness tracker</h2></div>
+        <span class="pill">Day <span class="inline-day"></span></span>
+      </div>
+      <div class="card tracker-card">
+        <div class="tracker-title"><div><span class="tracker-icon">💧</span><h3>Water</h3></div><strong><span id="waterValue">0</span> glasses</strong></div>
+        <p class="muted small">A glass is whatever size you choose. This is a log, not a prescribed target.</p>
+        <div class="stepper"><button id="waterMinus" aria-label="Decrease water">−</button><div class="dots" id="waterDots"></div><button id="waterPlus" aria-label="Increase water">+</button></div>
+      </div>
+      <div class="card tracker-card">
+        <div class="tracker-title"><div><span class="tracker-icon">🚶</span><h3>Movement</h3></div><strong><span id="minutesValue">0</span> min</strong></div>
+        <label for="activityType">Activity</label>
+        <select id="activityType"><option>Walking</option><option>Stretching / mobility</option><option>Strength training</option><option>Rest day</option><option>Other</option></select>
+        <input id="minutes" type="range" min="0" max="90" step="5" value="0">
+        <div class="range-labels"><span>0 min</span><span>90 min</span></div>
+      </div>
+      <div class="card form-card">
+        <label for="supplementNote">Supplement reminder</label>
+        <p class="muted small">Follow the directions on your exact product label and your clinician's advice. Do not change prescription medicines to fit the program.</p>
+        <textarea id="supplementNote" rows="2" placeholder="Optional reminder based on the kit label…"></textarea>
+        <button id="saveWellness" class="primary full">Save wellness log</button>
+      </div>
+    </section>
+
+    <section class="safety card">
+      <div class="safety-icon">♡</div>
+      <div>
+        <h3>A gentle reminder</h3>
+        <p>This is an organizer, not medical advice. Clear Change food rules vary by day. Confirm the official guide and check with a qualified healthcare professional that the program is appropriate for both of you. Stop and seek advice if you feel unwell.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p id="connectionMessage">Your progress is stored on this device until shared sync is configured.</p>
+    <button id="settingsButton" class="text-button">Shared sync setup</button>
+    <p class="tiny">Clear Change Companion · Not affiliated with Metagenics</p>
+  </footer>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" id="settingsForm">
+      <div class="dialog-heading"><h2>Shared sync</h2><button class="close-button" value="cancel" aria-label="Close">×</button></div>
+      <p class="muted">To sync progress between both Android phones, follow the setup guide included with this app. You will add your Firebase project settings to <code>firebase-config.js</code> and restrict access to your two accounts.</p>
+      <p class="muted">Until configured, data stays in this browser on this phone. Copy important notes before clearing browser data.</p>
+      <button class="primary full" value="cancel">Got it</button>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
